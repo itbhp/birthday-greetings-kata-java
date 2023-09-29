@@ -7,7 +7,7 @@ import javax.mail.*;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException, ParseException, MessagingException {
+	public static void main(String[] args) throws IOException, ParseException {
 		BirthdayService service = new BirthdayService(
 				new MessageService("localhost", 25, "sender@here.com"),
 				new EmployeeRepository("employee_data.txt")

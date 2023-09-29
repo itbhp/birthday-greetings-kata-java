@@ -19,21 +19,31 @@ public class MessageService {
         this.sender = sender;
     }
 
-    public void send(BirthdayMessage birthdayMessage) throws MessagingException {
-        // Create a mail session
-        Properties props = new Properties();
-        props.put("mail.smtp.host", smtpHost);
-        props.put("mail.smtp.port", "" + smtpPort);
-        Session session = Session.getInstance(props, null);
+    public void send(BirthdayMessage birthdayMessage){
+        try {
+            // Create a mail session
+            Properties props = new Properties();
+            props.put("mail.smtp.host", smtpHost);
+            props.put("mail.smtp.port", "" + smtpPort);
+            Session session = Session.getInstance(props, null);
 
-        // Construct the message
-        Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(sender));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(birthdayMessage.recipient));
-        msg.setSubject(birthdayMessage.subject);
-        msg.setText(birthdayMessage.body);
+            // Construct the message
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(sender));
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(birthdayMessage.recipient));
+            msg.setSubject(birthdayMessage.subject);
+            msg.setText(birthdayMessage.body);
 
-        // Send the message
-        Transport.send(msg);
+            // Send the message
+            Transport.send(msg);
+        } catch (MessagingException e) {
+            throw new MessageSendException(e);
+        }
+    }
+
+    public static class MessageSendException extends RuntimeException {
+        public MessageSendException(Throwable cause) {
+            super(cause);
+        }
     }
 }

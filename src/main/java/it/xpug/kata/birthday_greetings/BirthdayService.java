@@ -16,7 +16,7 @@ public class BirthdayService {
     }
 
     public void sendGreetings(OurDate ourDate)
-            throws IOException, ParseException, MessagingException {
+            throws IOException, ParseException {
         List<Employee> employees = employeeRepository.getAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(ourDate)) {
