@@ -14,7 +14,8 @@ import java.util.Properties;
 
 public class BirthdayService {
 
-	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, MessagingException {
+	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort)
+			throws IOException, ParseException, MessagingException {
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		in.readLine();
 		String str = "";
@@ -25,12 +26,13 @@ public class BirthdayService {
 				String recipient = employee.getEmail();
 				String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
 				String subject = "Happy Birthday!";
-				sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
+				final MessageService messageService = new MessageService(smtpHost, smtpPort);
+				messageService.send(recipient, subject, body);
 			}
 		}
 	}
 
-	private void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws MessagingException {
+	private static void sendMessage(String smtpHost, int smtpPort, String sender, String subject, String body, String recipient) throws MessagingException {
 		// Create a mail session
 		Properties props = new Properties();
 		props.put("mail.smtp.host", smtpHost);
@@ -46,5 +48,33 @@ public class BirthdayService {
 
 		// Send the message
 		Transport.send(msg);
+	}
+
+	private static class MessageService {
+		private final String smtpHost;
+		private final int smtpPort;
+
+		public MessageService(String smtpHost, int smtpPort) {
+			this.smtpHost = smtpHost;
+			this.smtpPort = smtpPort;
+		}
+
+		public void send(String recipient1, String subject1, String body1) throws MessagingException {
+			// Create a mail session
+			Properties props = new Properties();
+			props.put("mail.smtp.host", smtpHost);
+			props.put("mail.smtp.port", "" + smtpPort);
+			Session session = Session.getInstance(props, null);
+
+			// Construct the message
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress("sender@here.com"));
+			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient1));
+			msg.setSubject(subject1);
+			msg.setText(body1);
+
+			// Send the message
+			Transport.send(msg);
+		}
 	}
 }
