@@ -13,6 +13,10 @@ public class OurDate {
 		date = new Date();
 	}
 
+	public static OurDate now(){
+		return new OurDate();
+	}
+
 	public OurDate(String yyyyMMdd) throws ParseException {
 		date = new SimpleDateFormat("yyyy/MM/dd").parse(yyyyMMdd);
 	}

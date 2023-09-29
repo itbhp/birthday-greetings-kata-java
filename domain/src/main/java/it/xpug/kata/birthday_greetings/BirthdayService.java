@@ -12,7 +12,7 @@ public class BirthdayService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void sendGreetings(OurDate ourDate) {
+    public void sendGreetingsToEmployeesWithBirthDay(OurDate ourDate) {
         List<Employee> employees = employeeRepository.getAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(ourDate)) {
