@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class FileEmployeeRepository implements EmployeeRepository {
-    private final MemoizedList<Employee> employees;
+    private final LazyList<Employee> employees;
 
     public FileEmployeeRepository(InputStream resourceAsStream) {
-        employees = new MemoizedList<>(() -> readEmployees(resourceAsStream));
+        employees = new LazyList<>(() -> readEmployees(resourceAsStream));
     }
 
     @Override
@@ -40,11 +40,11 @@ public class FileEmployeeRepository implements EmployeeRepository {
         }
     }
 
-    private static class MemoizedList<T> {
+    private static class LazyList<T> {
         private List<T> list;
-        private Supplier<List<T>> supplier;
+        private final Supplier<List<T>> supplier;
 
-        public MemoizedList(Supplier<List<T>> supplier) {
+        public LazyList(Supplier<List<T>> supplier) {
             this.supplier = supplier;
         }
 
