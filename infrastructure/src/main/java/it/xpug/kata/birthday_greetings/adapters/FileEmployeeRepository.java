@@ -1,6 +1,12 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.adapters;
 
-import java.io.*;
+import it.xpug.kata.birthday_greetings.models.Employee;
+import it.xpug.kata.birthday_greetings.ports.EmployeeRepository;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,18 @@
 package it.xpug.kata.birthday_greetings;
 
-import static org.junit.Assert.*;
+import com.dumbster.smtp.SimpleSmtpServer;
+import com.dumbster.smtp.SmtpMessage;
+import it.xpug.kata.birthday_greetings.adapters.FileEmployeeRepository;
+import it.xpug.kata.birthday_greetings.adapters.MailMessageService;
+import it.xpug.kata.birthday_greetings.application.BirthdayService;
+import it.xpug.kata.birthday_greetings.models.OurDate;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.*;
-
-import com.dumbster.smtp.*;
-
-import java.io.IOException;
 import java.io.InputStream;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class AcceptanceTest {

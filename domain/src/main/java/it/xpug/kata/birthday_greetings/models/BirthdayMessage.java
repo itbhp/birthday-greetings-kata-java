@@ -1,4 +1,4 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.models;
 
 public class BirthdayMessage {
     public final String recipient;

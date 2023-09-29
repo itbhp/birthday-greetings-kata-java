@@ -1,4 +1,10 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthday_greetings.application;
+
+import it.xpug.kata.birthday_greetings.models.BirthdayMessage;
+import it.xpug.kata.birthday_greetings.models.Employee;
+import it.xpug.kata.birthday_greetings.models.OurDate;
+import it.xpug.kata.birthday_greetings.ports.EmployeeRepository;
+import it.xpug.kata.birthday_greetings.ports.MessageService;
 
 import java.util.List;
 
