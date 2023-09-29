@@ -1,8 +1,5 @@
 package it.xpug.kata.birthday_greetings;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 public class BirthdayService {
@@ -15,8 +12,7 @@ public class BirthdayService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void sendGreetings(OurDate ourDate)
-            throws IOException, ParseException {
+    public void sendGreetings(OurDate ourDate) {
         List<Employee> employees = employeeRepository.getAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(ourDate)) {

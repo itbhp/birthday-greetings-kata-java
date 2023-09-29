@@ -14,16 +14,26 @@ public class EmployeeRepository {
         this.fileName = fileName;
     }
 
-    public List<Employee> getAll() throws IOException, ParseException {
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
-        in.readLine();
-        String str = "";
-        List<Employee> employees = new ArrayList<>();
-        while ((str = in.readLine()) != null) {
-            String[] employeeData = str.split(", ");
-            Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
-            employees.add(employee);
+    public List<Employee> getAll() {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            in.readLine();
+            String str = "";
+            List<Employee> employees = new ArrayList<>();
+            while ((str = in.readLine()) != null) {
+                String[] employeeData = str.split(", ");
+                Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
+                employees.add(employee);
+            }
+            return employees;
+        } catch (IOException | ParseException e) {
+            throw new ReadEmployeesException(e);
         }
-        return employees;
+    }
+
+    public static class ReadEmployeesException extends RuntimeException {
+        public ReadEmployeesException(Throwable cause) {
+            super(cause);
+        }
     }
 }
