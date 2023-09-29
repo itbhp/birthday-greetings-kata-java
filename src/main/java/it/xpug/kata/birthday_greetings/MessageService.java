@@ -19,7 +19,7 @@ public class MessageService {
         this.sender = sender;
     }
 
-    public void send(String recipient, String subject, String body) throws MessagingException {
+    public void send(BirthdayMessage birthdayMessage) throws MessagingException {
         // Create a mail session
         Properties props = new Properties();
         props.put("mail.smtp.host", smtpHost);
@@ -29,9 +29,9 @@ public class MessageService {
         // Construct the message
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(sender));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        msg.setSubject(subject);
-        msg.setText(body);
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(birthdayMessage.recipient));
+        msg.setSubject(birthdayMessage.subject);
+        msg.setText(birthdayMessage.body);
 
         // Send the message
         Transport.send(msg);
