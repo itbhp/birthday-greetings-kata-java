@@ -14,7 +14,7 @@ public class AcceptanceTest {
 	private SimpleSmtpServer mailServer;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
 		birthdayService = new BirthdayService();
 	}
@@ -26,7 +26,7 @@ public class AcceptanceTest {
 	}
 
 	@Test
-	public void willSendGreetings_whenItsSomebodysBirthday() throws Exception {
+	public void willSendGreetings_whenItsSomebodyBirthday() throws Exception {
 
 		birthdayService.sendGreetings("employee_data.txt", new XDate("2008/10/08"), "localhost", NONSTANDARD_PORT);
 
@@ -36,11 +36,11 @@ public class AcceptanceTest {
 		assertEquals("Happy Birthday!", message.getHeaderValue("Subject"));
 		String[] recipients = message.getHeaderValues("To");
 		assertEquals(1, recipients.length);
-		assertEquals("john.doe@foobar.com", recipients[0].toString());
+		assertEquals("john.doe@foobar.com", recipients[0]);
 	}
 
 	@Test
-	public void willNotSendEmailsWhenNobodysBirthday() throws Exception {
+	public void willNotSendEmailsWhenNobodyBirthday() throws Exception {
 		birthdayService.sendGreetings("employee_data.txt", new XDate("2008/01/01"), "localhost", NONSTANDARD_PORT);
 
 		assertEquals("what? messages?", 0, mailServer.getReceivedEmailSize());
