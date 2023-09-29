@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings.adapters;
 
+import it.xpug.kata.birthday_greetings.exceptions.MessageSendException;
 import it.xpug.kata.birthday_greetings.models.BirthdayMessage;
 import it.xpug.kata.birthday_greetings.ports.MessageService;
 
@@ -45,9 +46,4 @@ public class MailMessageService implements MessageService {
         }
     }
 
-    public static class MessageSendException extends RuntimeException {
-        public MessageSendException(Throwable cause) {
-            super(cause);
-        }
-    }
 }

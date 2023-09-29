@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday_greetings.adapters;
 
+import it.xpug.kata.birthday_greetings.exceptions.ReadEmployeesException;
 import it.xpug.kata.birthday_greetings.models.Employee;
 import it.xpug.kata.birthday_greetings.ports.EmployeeRepository;
 
@@ -37,12 +38,6 @@ public class FileEmployeeRepository implements EmployeeRepository {
             return employees;
         } catch (IOException | ParseException e) {
             throw new ReadEmployeesException(e);
-        }
-    }
-
-    private static class ReadEmployeesException extends RuntimeException {
-        public ReadEmployeesException(Throwable cause) {
-            super(cause);
         }
     }
 
