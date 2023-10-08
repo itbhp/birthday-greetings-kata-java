@@ -27,23 +27,39 @@ public class MailMessageService implements MessageService {
     public void sendMessageTo(Employee employee) {
         try {
             // Create a mail session
-            Properties props = new Properties();
-            props.put("mail.smtp.host", smtpHost);
-            props.put("mail.smtp.port", "" + smtpPort);
-            Session session = Session.getInstance(props, null);
+            Session session = createSession();
 
             // Construct the message
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(sender));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(employee.getEmail()));
-            msg.setSubject("Happy Birthday!");
-            msg.setText("Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName()));
+            Message msg = messageFor(employee, session);
 
             // Send the message
             Transport.send(msg);
         } catch (MessagingException e) {
             throw new MessageSendException(e);
         }
+    }
+
+    private Message messageFor(Employee employee, Session session) throws MessagingException {
+        String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
+        String recipient = employee.getEmail();
+        String subject = "Happy Birthday!";
+        return createMessage(session, recipient, subject, body);
+    }
+
+    private Message createMessage(Session session, String recipient, String subject, String body) throws MessagingException {
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress(sender));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+        msg.setSubject(subject);
+        msg.setText(body);
+        return msg;
+    }
+
+    private Session createSession() {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", "" + smtpPort);
+        return Session.getInstance(props, null);
     }
 
 }
