@@ -1,6 +1,5 @@
 package it.xpug.kata.birthday_greetings.application;
 
-import it.xpug.kata.birthday_greetings.models.BirthdayMessage;
 import it.xpug.kata.birthday_greetings.models.Employee;
 import it.xpug.kata.birthday_greetings.models.OurDate;
 import it.xpug.kata.birthday_greetings.ports.EmployeeRepository;
@@ -22,7 +21,7 @@ public class BirthdayService {
         List<Employee> employees = employeeRepository.getAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(ourDate)) {
-                messageService.send(new BirthdayMessage(employee));
+                messageService.send("Happy Birthday!", employee.getEmail(), "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName()));
             }
         }
     }
