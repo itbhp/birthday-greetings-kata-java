@@ -1,6 +1,7 @@
 package it.xpug.kata.birthday_greetings.adapters;
 
 import it.xpug.kata.birthday_greetings.exceptions.MessageSendException;
+import it.xpug.kata.birthday_greetings.models.Employee;
 import it.xpug.kata.birthday_greetings.ports.MessageService;
 
 import javax.mail.Message;
@@ -23,7 +24,7 @@ public class MailMessageService implements MessageService {
     }
 
     @Override
-    public void send(String subject, String recipient, String body){
+    public void sendMessageTo(Employee employee) {
         try {
             // Create a mail session
             Properties props = new Properties();
@@ -34,9 +35,9 @@ public class MailMessageService implements MessageService {
             // Construct the message
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(sender));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            msg.setSubject(subject);
-            msg.setText(body);
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(employee.getEmail()));
+            msg.setSubject("Happy Birthday!");
+            msg.setText("Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName()));
 
             // Send the message
             Transport.send(msg);

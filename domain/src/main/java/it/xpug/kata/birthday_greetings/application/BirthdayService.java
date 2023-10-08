@@ -21,7 +21,7 @@ public class BirthdayService {
         List<Employee> employees = employeeRepository.getAll();
         for (Employee employee : employees) {
             if (employee.isBirthday(ourDate)) {
-                messageService.send("Happy Birthday!", employee.getEmail(), "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName()));
+                messageService.sendMessageTo(employee);
             }
         }
     }
